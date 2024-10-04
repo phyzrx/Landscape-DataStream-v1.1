@@ -196,8 +196,5 @@ def Read():
 
 def Close():
     global ins
-    try:
-        ins.close()
-    except:
-        pass
+    ins.close()
     return "Closed"

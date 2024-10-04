@@ -32,11 +32,11 @@ for name in p:
                 value = str(eval(name))
                 if value.startswith("<function"):
                     all_sequences = all_sequences + [str(name)]
-def get_all_sequence(*args):
+def get_all_sequence():
     global all_sequences
     result = []
     for sequence in all_sequences:
-        result = result + [globals()[sequence](*args)]
+        result = result + [globals()[sequence]()]
     return result
 def compile_sequence(Description):
     global all_sequences

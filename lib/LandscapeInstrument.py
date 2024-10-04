@@ -13,9 +13,9 @@ from LandscapeError import LandscapeERROR as err
 from time import sleep
 
 def InitializeDecorator(func):
-    def wrapper(*arg, **kwargs):
+    def wrapper(*args, **kwargs):
         try:
-            fc = func(*arg, **kwargs)
+            fc = func(*args, **kwargs)
             fc.ins.clear()
             print("%s @ %s : is Initialzied" % (fc.Description, str(fc.Instrument_Address)))
         except Exception as e:
@@ -27,9 +27,9 @@ def InitializeDecorator(func):
     return wrapper
 
 def CallDecorator(func):
-    def wrapper(*arg, **kwargs):
+    def wrapper(*args, **kwargs):
         try:
-            fc = func(*arg, **kwargs)
+            fc = func(*args, **kwargs)
             fc.ins.clear()
             print("%s @ %s : is Called" % (fc.Description, str(fc.Instrument_Address)))
         except Exception as e:

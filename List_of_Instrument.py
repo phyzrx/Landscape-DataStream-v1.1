@@ -26,7 +26,7 @@ def get_all_instrument(*arg):
     global all_instruments
     result = []
     for instrument in all_instruments:
-        result = result + [globals()[instrument](arg)]
+        result = result + [globals()[instrument](*arg)]
     return result
 
 if __name__ == "__main__":

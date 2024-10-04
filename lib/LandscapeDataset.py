@@ -118,11 +118,14 @@ class LandscapeDataset():
             k = k + [(str(key), str(value))]
         return (p, self.Scan_Instrument, self.Read_Instrument, self.Scan_Array, k)
     
-    def preview(self, *arg):
-        if len(arg) == 0:
-            return self.preview_parameters()
+    def preview(self, *args):
+        while type(args) == tuple:
+            (args, *rst) = args
+        print(args)
+        if len(args) == 0 or args == "" or args == "Preview" or args[0] == "" or args[0] == "Preview":
+            return (self.preview_parameters())
         else:
-            return self.dataset_parameters()
+            return (self.dataset_parameters())
 
     def identify(self, Description = ""):
         if not Description == "":
@@ -140,3 +143,7 @@ class LandscapeDataset():
     def process(self, name = "", function = ""):
         self.Data_Processing.update({name: function})
         return self
+    
+if __name__ == "__main__":
+    d = LandscapeDataset("1")
+    print(d.preview("Preview"))

@@ -125,7 +125,7 @@ def Scan(sv):
             print(e)
             pass
     rb = True
-    # rt = ult.findnum(ins.Scan_Stablize_Timeout)[0]
+    # rt = ut.findnum(ins.Scan_Stablize_Timeout)[0]
     rt = 600
     return (result, rb, rt)
 
@@ -133,13 +133,13 @@ def Approach(sv):
     global ins
     result = "Approached"
     rb = False
-    rt = ult.findnum(ins.Scan_Stablize_Timeout)[0]
+    rt = ut.findnum(ins.Scan_Stablize_Timeout)[0]
     # condition = min(max(abs(sv-ins.Previous_Value)*0.25, 0.000075), ins.rate*0.25*ins.c/10000)
     condition = min(max(abs(sv-ins.Previous_Value)*0.25, 0.0002*ins.c/10000), ins.rate*0.5*ins.c/10000)
     if ins.rresult == "":
         rb = False
     else:
-        if abs(ult.findnum(ins.rresult)[0]*ins.c/10000 - sv) <= condition and not ins.near:
+        if abs(ut.findnum(ins.rresult)[0]*ins.c/10000 - sv) <= condition and not ins.near:
             ins.raw_write("ULIM {:.4g}".format(sv/ins.c*10000))
             ins.raw_write("SWEEP UP")
             for i in range(5):
@@ -150,8 +150,8 @@ def Approach(sv):
                     pass
             ins.near = True
             ins.overshoot = True
-            print("Field Near, start = %g, target = %g, now = %g, rate = %g, d = %g, condition = %g" % (ins.Previous_Value, sv, ult.findnum(ins.rresult)[0]*ins.c/10000, ins.rate, abs(ult.findnum(ins.rresult)[0]*ins.c/10000 - sv), condition))
-        if ((ult.findnum(ins.rresult)[0]*ins.c/10000 <= sv <= ins.Previous_Value) or (ult.findnum(ins.rresult)[0]*ins.c/10000 >= sv >= ins.Previous_Value)) and not ins.overshoot:
+            print("Field Near, start = %g, target = %g, now = %g, rate = %g, d = %g, condition = %g" % (ins.Previous_Value, sv, ut.findnum(ins.rresult)[0]*ins.c/10000, ins.rate, abs(ut.findnum(ins.rresult)[0]*ins.c/10000 - sv), condition))
+        if ((ut.findnum(ins.rresult)[0]*ins.c/10000 <= sv <= ins.Previous_Value) or (ut.findnum(ins.rresult)[0]*ins.c/10000 >= sv >= ins.Previous_Value)) and not ins.overshoot:
             ins.raw_write("ULIM {:.4g}".format(sv/ins.c*10000))
             ins.raw_write("SWEEP UP")
             for i in range(5):
@@ -162,9 +162,9 @@ def Approach(sv):
                     pass
             ins.near = True
             ins.overshoot = True
-            print("Field Overshoot, start = %g, target = %g, now = %g, rate = %g, d = %g, condition = %g" % (ins.Previous_Value, sv, ult.findnum(ins.rresult)[0]*ins.c/10000, ins.rate, abs(ult.findnum(ins.rresult)[0]*ins.c/10000 - sv), condition))
+            print("Field Overshoot, start = %g, target = %g, now = %g, rate = %g, d = %g, condition = %g" % (ins.Previous_Value, sv, ut.findnum(ins.rresult)[0]*ins.c/10000, ins.rate, abs(ut.findnum(ins.rresult)[0]*ins.c/10000 - sv), condition))
         if ins.near:
-            if abs(ult.findnum(ins.rresult)[0]*ins.c/10000 - sv) <= min(max(abs(ult.findnum(ins.Scan_Condition)[0]), abs(sv-ins.Previous_Value)*0.01), 0.0001):
+            if abs(ut.findnum(ins.rresult)[0]*ins.c/10000 - sv) <= min(max(abs(ut.findnum(ins.Scan_Condition)[0]), abs(sv-ins.Previous_Value)*0.01), 0.0001):
                 ins.stbcount = ins.stbcount + 1
             else:
                 ins.stbcount = max(ins.stbcount - 5, 0)
@@ -177,7 +177,7 @@ def Approach(sv):
                 rb = False
                 rt = 600
             if ins.field_arrived:
-                rb = (time.time() - ins.field_timer) >= ult.findnum(ins.Scan_Stablize_Timeout)[0]
+                rb = (time.time() - ins.field_timer) >= ut.findnum(ins.Scan_Stablize_Timeout)[0]
     return (result, rb, rt)
 
 def Write():
@@ -190,7 +190,7 @@ def Read():
     global ins
     result = ""
     result = ins.read()
-    b = ult.findnum(result)[0] * ins.c /10000
+    b = ut.findnum(result)[0] * ins.c /10000
     result = result + str(b)
     return result
 

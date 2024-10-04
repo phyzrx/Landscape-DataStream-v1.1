@@ -1,5 +1,6 @@
 """
-    DMM HP34401A, communication throught Labrad server
+    DMM HP34401A
+    Example for python + user defined module based communications
 """
 # To import from outside \lib
 import sys

@@ -1,5 +1,6 @@
 """
     Keithley 2450 Source Meter
+    Example for python + pyvisa based communications
 """
 # To import from outside \lib
 import sys

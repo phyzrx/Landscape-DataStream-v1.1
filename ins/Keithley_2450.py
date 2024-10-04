@@ -62,44 +62,20 @@ def Call(parameters):
     global ins
     print("Calling")
     result = "Called"
-    try:
-        ins.setup(parameters)
-        ins.call()
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = False
+    ins.setup(parameters)
+    ins.call()
     return (ins.instrument_parameters(), result)
 
 def Initialize(*args):
     global ins
     result = "Initialized"
-    try:
-        ins.initialize()
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = False
+    ins.initialize()
     return result
 
 def Retrieve(*arg):
     global ins
     result = "Retrieved"
-    try:
-        ins.retrieve()
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = False
+    ins.retrieve()
     return result
 
 def Scan(sv):
@@ -107,17 +83,9 @@ def Scan(sv):
     result = "Scanned"
     rb = False
     rt = 0
-    try:
-        ins.scan(sv)
-        # rb = not ins.approach(sv)
-        # rt = 600
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = False
+    ins.scan(sv)
+    # rb = not ins.approach(sv)
+    # rt = 600
     return (result, rb, rt)
 
 def Approach(sv):
@@ -125,39 +93,20 @@ def Approach(sv):
     result = "Approached"
     rb = False
     rt = 0
-    try:
-        rb = ins.approach(sv)
-        rt = 600
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = False
+    rb = ins.approach(sv)
+    rt = 600
     return (result, rb, rt)
 
 def Write():
     global ins
     result = "Write Done"
-    try:
-        ins.write()
-    except Exception as e:
-        try:
-            ins.close()
-        except:
-            pass
-        print(e)
-        result = str(e)
+    ins.write()
     return result
 
 def Read():
     global ins
     result = ""
-    try:
-        result = ins.read()
-    except:
-        pass
+    result = ins.read()
     return result
 
 def Start_Monitor():
@@ -174,10 +123,7 @@ def Log():
 
 def Close():
     global ins
-    try:
-        ins.close()
-    except:
-        pass
+    ins.close()
     return "Closed"
 
 if __name__ == "__main__":
@@ -188,12 +134,13 @@ if __name__ == "__main__":
     sleep(1)
     while True:
         try:
-            (result, rb, rt) = Scan(1)
+            (result, rb, rt) = Approach(1)
             Write()
             Read()
             sleep(0.5)
-            if not rb:
+            if rb:
                 break
         except:
             Close()
             break
+    Close()

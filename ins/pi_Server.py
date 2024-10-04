@@ -93,6 +93,7 @@ def Call(parameters):
     result = "Called"
     ins.setup(parameters)
     ins.call()
+    ins.setmode()
     return (ins.instrument_parameters(), result)
 
 def Initialize(*args):
@@ -136,6 +137,18 @@ def Approach(sv):
     rt = 600
     return (result, rb, rt)
 
+def Start_Monitor():
+    global ins
+    ins.start_monitor()
+
+def Stop_Monitor():
+    global ins
+    ins.stop_monitor()
+
+def Log():
+    global ins
+    return ins.log()
+
 def Write():
     global ins
     result = "Write Done"
@@ -163,7 +176,15 @@ if __name__ == "__main__":
     Call(k.instrument_parameters())
     print(k.instrument_parameters())
     Initialize()
-    Write()
-    print(Read())
+    Start_Monitor()
+    while True:
+        try:
+            sleep(1)
+            print("---------")
+            print(Log())
+            print("---------")
+        except:
+            Stop_Monitor()
+            break
     Close()
     pass

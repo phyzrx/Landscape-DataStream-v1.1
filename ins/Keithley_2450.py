@@ -135,7 +135,7 @@ if __name__ == "__main__":
     sleep(1)
     while True:
         try:
-            (result, rb, rt) = Approach(1)
+            (result, rb, rt) = Approach(0)
             Write()
             Read()
             sleep(0.5)

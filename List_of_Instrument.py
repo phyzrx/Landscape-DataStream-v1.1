@@ -5,7 +5,7 @@ sys.path.append(path + r"\lib")
 sys.path.append(path + r"\ins")
 import inspect
 
-def i1():
+def i1(*arg):
     from Keithley_2450 import Keithley2450
     p = Keithley2450(inspect.getfile(Keithley2450))
     p.Description = "K2450-1"
@@ -22,9 +22,12 @@ for name in p:
         value = str(eval(name))
         if value.startswith("<function"):
             all_instruments = all_instruments + [str(name)]
-def get_all_instrument():
+def get_all_instrument(*arg):
     global all_instruments
-    return all_instruments
+    result = []
+    for instrument in all_instruments:
+        result = result + [globals()[instrument](arg)]
+    return result
 
 if __name__ == "__main__":
     print(get_all_instrument())

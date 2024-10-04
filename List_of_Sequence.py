@@ -6,7 +6,7 @@ sys.path.append(path + r"\ins")
 
 from LandscapeDataset import LandscapeDataset as dt
 
-def d1():
+def d1(*arg):
     d = dt("Sequence Step 01")
     d.Description = "Sequence Step 01"
     ins = "K2450-1"
@@ -15,7 +15,10 @@ def d1():
     ]
     d.scan(ins, conf)
     d.read(ins, conf)
-    return d.dataset_parameters()
+    d.x_start = 0
+    d.x_end = 1
+    d.x_step = 0.1
+    return (d.Description, d.preview(arg))
 
 ### ----------------------------------------------------------------- ###
 # End of sequences
@@ -29,9 +32,12 @@ for name in p:
                 value = str(eval(name))
                 if value.startswith("<function"):
                     all_sequences = all_sequences + [str(name)]
-def get_all_sequence():
+def get_all_sequence(*arg):
     global all_sequences
-    return all_sequences
+    result = []
+    for sequence in all_sequences:
+        result = result + [globals()[sequence](arg)]
+    return result
 
 if __name__ == "__main__":
-    print(get_all_sequence())
+    print(get_all_sequence(1))

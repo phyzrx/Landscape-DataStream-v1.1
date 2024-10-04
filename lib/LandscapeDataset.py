@@ -43,8 +43,6 @@ class LandscapeDataset():
     y_end = None
     y_step = None
     y_number = None
-    x = ""
-    y = ""
     z = ""
 
     Scan_Instrument = [] # (Instrument_Description, Instrument_Parameters)
@@ -120,6 +118,12 @@ class LandscapeDataset():
             k = k + [(str(key), str(value))]
         return (p, self.Scan_Instrument, self.Read_Instrument, self.Scan_Array, k)
     
+    def preview(self, *arg):
+        if len(arg) == 0:
+            return self.preview_parameters()
+        else:
+            return self.dataset_parameters()
+
     def identify(self, Description = ""):
         if not Description == "":
             self.Description = Description

@@ -185,16 +185,15 @@ if __name__ == "__main__":
     Call([("Instrument Address", r"TCPIP0::192.168.1.101::inst0::INSTR")])
     Initialize()
     Retrieve()
-    Start_Monitor()
     sleep(1)
     while True:
         try:
-            Scan(0)
-            print("--------")
-            print(Log())
-            print("--------")
+            (result, rb, rt) = Scan(1)
+            Write()
+            Read()
             sleep(0.5)
+            if not rb:
+                break
         except:
-            Stop_Monitor()
             Close()
             break

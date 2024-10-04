@@ -120,8 +120,10 @@ class LandscapeDataset():
     
     def preview(self, *args):
         while type(args) == tuple:
-            (args, *rst) = args
-        print(args)
+            try:
+                (args, *rst) = args
+            except:
+                break
         if len(args) == 0 or args == "" or args == "Preview" or args[0] == "" or args[0] == "Preview":
             return (self.preview_parameters())
         else:

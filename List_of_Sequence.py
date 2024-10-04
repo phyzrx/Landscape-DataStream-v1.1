@@ -18,7 +18,7 @@ def d1(*arg):
     d.x_start = 0
     d.x_end = 1
     d.x_step = 0.1
-    return (d.Description, d.preview(arg))
+    return (d.Description, d.preview(*arg))
 
 ### ----------------------------------------------------------------- ###
 # End of sequences
@@ -36,8 +36,19 @@ def get_all_sequence(*args):
     global all_sequences
     result = []
     for sequence in all_sequences:
-        result = result + [globals()[sequence](args)]
+        result = result + [globals()[sequence](*args)]
+    return result
+def compile_sequence(Description):
+    global all_sequences
+    result = ()
+    for sequence in all_sequences:
+        (d, p) = globals()[sequence]()
+        if d == Description:
+            (d, p) = globals()[sequence]("Run")
+            result = p
+            break
     return result
 
 if __name__ == "__main__":
-    print(get_all_sequence("Preview"))
+    print(get_all_sequence())
+    print(compile_sequence("Sequence Step 01"))

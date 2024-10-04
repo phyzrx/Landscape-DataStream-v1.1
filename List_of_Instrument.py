@@ -28,6 +28,16 @@ def get_all_instrument(*args):
     for instrument in all_instruments:
         result = result + [globals()[instrument](*args)]
     return result
+def compile_instrument(Description):
+    global all_instruments
+    result = []
+    for instrument in all_instruments:
+        (d, p) = globals()[instrument]()
+        if d == Description:
+            result = p
+            break
+    return result
 
 if __name__ == "__main__":
     print(get_all_instrument())
+    print(compile_instrument("K2450-1"))

@@ -14,6 +14,7 @@ def d1():
         ("Parameter Name 1", "Parameter Value 1")
     ]
     d.scan(ins, conf)
+    d.read(ins, conf)
     return d.dataset_parameters()
 
 ### ----------------------------------------------------------------- ###

@@ -63,6 +63,30 @@ class LandscapeDataset():
         self.Dataset_Name = str(dataset_name)
         self.Description = str(description)
 
+    def setup(self, parameters):
+        try:
+            for pair in parameters:
+                (parameter_name, parameter_value) = pair
+                self.__setattr__(parameter_name.replace(" ", "_"), parameter_value)
+        except:
+            pass
+        return self
+    
+    def preview_parameters(self):
+        all_names = dir(self)
+        p = []
+        for name in all_names:
+            if not name.startswith("__"):
+                tpe = type(self.__getattribute__(name))
+                value = str(self.__getattribute__(name))
+                if not value.startswith("<bound method"):
+                    if tpe == str:
+                        p = p + [(str(name).replace("_", " "), str(value))]
+        k = []
+        for key, value in self.Data_Processing.items():
+            k = k + [(str(key), str(value))]
+        return (p, self.Scan_Instrument, self.Read_Instrument, k)
+
     def dataset_parameters(self):
         all_names = dir(self)
         p = []

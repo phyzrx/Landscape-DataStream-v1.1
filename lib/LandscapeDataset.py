@@ -27,7 +27,7 @@ class LandscapeDataset():
     Array:
     Scan_Array,
     """
-    Description = ""
+    Description = "Landscape DataStream Dataset"
     File_Name = "Data File Name"
     Dataset_Name = "Dataset"
     Note = ""

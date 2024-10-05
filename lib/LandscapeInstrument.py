@@ -155,6 +155,10 @@ class LandscapeInstrument():
                 self.ins.read_termination = self.Read_Termination
             print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
         except Exception as e:
+            try:
+                self.ins.read_termination = self.Read_Termination
+            except:
+                pass
             print("%s @ %s : resource Open with error, resource might already been openned" % (self.Description, str(self.Instrument_Address)))
 
     def initialize(self):

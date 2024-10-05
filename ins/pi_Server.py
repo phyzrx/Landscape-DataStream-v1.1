@@ -90,6 +90,7 @@ def Call(parameters):
     ins.setup(parameters)
     ins.call()
     ins.setmode()
+    ins.
     return (ins.instrument_parameters(), result)
 
 def Open(*args):

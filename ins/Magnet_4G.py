@@ -196,7 +196,9 @@ def Read():
 
 def Start_Monitor():
     global ins
+    ins.setmode("Z")
     ins.call()
+    ins.initialize()
     ins.start_monitor()
 
 def Stop_Monitor():
@@ -208,10 +210,27 @@ def Log():
     result = ""
     result = ins.log()
     b = ut.findnum(result)[0] * ins.c /10000
-    result = result + str(b)
+    result = result +  str(b) + "T"
     return (ins.Read_Name, result)
 
 def Close():
     global ins
     ins.close()
     return "Closed"
+
+if __name__ == "__main__":
+    k = Magnet4G()
+    k.Instrument_Address = "TCPIP0::192.168.1.21::7777::SOCKET"
+    Call(k.instrument_parameters())
+    Initialize()
+    Start_Monitor()
+    while True:
+        try:
+            sleep(1)
+            print("---------")
+            print(Log())
+            print("---------")
+        except:
+            Stop_Monitor()
+            break
+    Close()

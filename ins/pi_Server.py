@@ -182,4 +182,3 @@ if __name__ == "__main__":
             Stop_Monitor()
             break
     Close()
-    pass

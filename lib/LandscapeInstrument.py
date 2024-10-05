@@ -152,15 +152,11 @@ class LandscapeInstrument():
 
     def open_resource(self):
         try:
-            self.ins = self.ins
-            print("%s @ %s : resource is already Opened" %(self.Description, str(self.Instrument_Address)))
-        except:
-            try:
-                rm = pyvisa.ResourceManager()
-                self.ins = rm.open_resource(self.Instrument_Address)
-                print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
-            except Exception as e:
-                raise err("%s @ %s : at %g resource Open with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
+            rm = pyvisa.ResourceManager()
+            self.ins = rm.open_resource(self.Instrument_Address)
+            print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
+        except Exception as e:
+            print("%s @ %s : resource Open with error, resource might already been openned" % (self.Description, str(self.Instrument_Address)))
 
     def initialize(self):
         print("%s @ %s : Default Initialize Function is Called" % (self.Description, str(self.Instrument_Address)))
@@ -342,6 +338,7 @@ class LandscapeInstrument():
 
     def start_monitor(self):
         self.monitor_stop = False
+        self.open_resource()
         import threading as th
         self.monitor_thread = th.Thread(target=self.monitor_loop)
         self.monitor_thread.start()

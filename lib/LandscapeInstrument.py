@@ -11,6 +11,7 @@ import pyvisa
 import LandscapeUtilities
 from LandscapeError import LandscapeERROR as err
 from time import sleep
+import sys
 
 def InitializeDecorator(func):
     def wrapper(*args, **kwargs):
@@ -345,8 +346,11 @@ class LandscapeInstrument():
 
     def log(self):
         return self.rresult.replace("\r","").replace("\n","")
-
+    
     def close(self):
+        return self
+
+    def exit(self):
         try:
             self.stop_monitor()
         except:
@@ -356,6 +360,7 @@ class LandscapeInstrument():
         except:
             pass
         print("%s @ %s : is Closed" % (self.Description, str(self.Instrument_Address)))
+        sys.exit()
         return self
     
 if __name__ == "__main__":

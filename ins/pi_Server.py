@@ -166,6 +166,11 @@ def Close():
     ins.close()
     return "Closed"
 
+def Exit():
+    global ins
+    ins.exit()
+    return "Exited"
+
 if __name__ == "__main__":
     k = piServer()
     k.Instrument_Address = "TCPIP0::192.168.1.20::6666::SOCKET"
@@ -182,3 +187,4 @@ if __name__ == "__main__":
             Stop_Monitor()
             break
     Close()
+    Exit()

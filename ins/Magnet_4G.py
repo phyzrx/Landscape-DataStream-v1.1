@@ -218,6 +218,11 @@ def Close():
     ins.close()
     return "Closed"
 
+def Exit():
+    global ins
+    ins.exit()
+    return "Exited"
+
 if __name__ == "__main__":
     k = Magnet4G()
     k.Instrument_Address = "TCPIP0::192.168.1.21::7777::SOCKET"
@@ -234,3 +239,4 @@ if __name__ == "__main__":
             Stop_Monitor()
             break
     Close()
+    Exit()

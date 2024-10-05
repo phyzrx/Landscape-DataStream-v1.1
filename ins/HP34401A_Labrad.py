@@ -80,6 +80,10 @@ def Close():
     global ins
     return "Closed"
 
+def Exit():
+    global ins
+    return "Exited"
+
 if __name__ == "__main__":
     m = HP34401A()
     Call(m.instrument_parameters())
@@ -88,4 +92,4 @@ if __name__ == "__main__":
     ans = Read()
     print(ans)
     Close()
-    pass
+    Exit()

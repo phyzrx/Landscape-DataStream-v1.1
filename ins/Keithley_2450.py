@@ -128,6 +128,11 @@ def Close():
     ins.close()
     return "Closed"
 
+def Exit():
+    global ins
+    ins.exit()
+    return "Exited"
+
 if __name__ == "__main__":
     print(Identify("K2450-1"))
     Call([("Instrument Address", r"TCPIP0::192.168.1.101::inst0::INSTR")])
@@ -146,3 +151,4 @@ if __name__ == "__main__":
             Close()
             break
     Close()
+    Exit()

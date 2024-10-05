@@ -175,6 +175,7 @@ def Release():
 
 def Close():
     global ins
+    ins.release_resource()
     ins.close()
     return "Closed"
 

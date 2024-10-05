@@ -124,9 +124,9 @@
                     <mxGeometry x="90" y="130" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="70" value="parameter array" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="360" y="780" width="60" height="30" as="geometry"/>
+                    <mxGeometry x="360" y="770" width="60" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="71" value="monitor loop stopped" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;" parent="1" vertex="1">
+                <mxCell id="71" value="Parameters transfered&lt;br&gt;monitor loop stopped" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="90" y="1070" width="120" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="80" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="74" target="78" edge="1">
@@ -138,7 +138,7 @@
                 <mxCell id="81" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="76" target="79" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="76" value="Open external labview communication VI" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=1;" parent="1" vertex="1">
+                <mxCell id="76" value="Address.vi" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="780" y="820" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="77" value="parameter array" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
@@ -159,7 +159,7 @@
                 <mxCell id="82" value="Parameters transfered" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="570" y="1070" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="84" value="" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;" parent="1" vertex="1">
+                <mxCell id="84" value="User defined" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;" parent="1" vertex="1">
                     <mxGeometry x="780" y="1070" width="120" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="87" value="Address from parameter array" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">

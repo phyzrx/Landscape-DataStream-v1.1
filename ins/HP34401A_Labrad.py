@@ -91,6 +91,10 @@ def Exit():
     global ins
     return "Exited"
 
+def Abort():
+    global ins
+    return "Aborted"
+
 if __name__ == "__main__":
     m = HP34401A()
     Call(m.instrument_parameters())

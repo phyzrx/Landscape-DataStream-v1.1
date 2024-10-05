@@ -235,6 +235,11 @@ def Exit():
     ins.exit()
     return "Exited"
 
+def Abort():
+    global ins
+    ins.abort()
+    return "Aborted"
+
 if __name__ == "__main__":
     k = Magnet4G()
     k.Instrument_Address = "TCPIP0::192.168.1.21::7777::SOCKET"

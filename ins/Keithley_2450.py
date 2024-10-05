@@ -145,16 +145,20 @@ def Exit():
     ins.exit()
     return "Exited"
 
+def Abort():
+    global ins
+    ins.abort()
+    return "Aborted"
+
 if __name__ == "__main__":
     print(Identify("K2450-1"))
     Call([("Instrument Address", r"TCPIP0::192.168.1.101::inst0::INSTR")])
     Open()
     Initialize()
     Retrieve()
-    sleep(1)
     while True:
         try:
-            (result, rb, rt) = Approach(1)
+            (result, rb, rt) = Approach(0)
             Write()
             Read()
             sleep(0.5)

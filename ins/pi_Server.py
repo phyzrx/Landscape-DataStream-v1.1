@@ -183,6 +183,11 @@ def Exit():
     ins.exit()
     return "Exited"
 
+def Abort():
+    global ins
+    ins.abort()
+    return "Aborted"
+
 if __name__ == "__main__":
     k = piServer()
     k.Instrument_Address = "TCPIP0::192.168.1.20::6666::SOCKET"

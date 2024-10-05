@@ -377,6 +377,9 @@ class LandscapeInstrument():
         except:
             pass
         print("%s @ %s : is Exited" % (self.Description, str(self.Instrument_Address)))
+        return self
+    
+    def abort(self):
         sys.exit()
         return self
     

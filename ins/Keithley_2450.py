@@ -156,9 +156,10 @@ if __name__ == "__main__":
     Open()
     Initialize()
     Retrieve()
+    Start_Monitor()
     while True:
         try:
-            (result, rb, rt) = Approach(0)
+            (result, rb, rt) = Approach(1)
             Write()
             Read()
             sleep(0.5)

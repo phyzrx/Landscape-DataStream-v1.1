@@ -88,9 +88,8 @@ def Call(parameters):
     print("Calling")
     result = "Called"
     ins.setup(parameters)
-    ins.call()
     ins.setmode()
-    ins.open_resource()
+    ins.call()
     ins.start_monitor()
     return (ins.instrument_parameters(), result)
 
@@ -195,20 +194,5 @@ if __name__ == "__main__":
     k = piServer()
     k.Instrument_Address = "TCPIP0::192.168.1.20::6666::SOCKET"
     Call(k.instrument_parameters())
-    Open()
-    # Initialize()
-    # Start_Monitor()
-    # sleep(2)
-    # while True:
-    #     try:
-    #         sleep(1)
-    #         print("---------")
-    #         print(Log())
-    #         print("---------")
-    #     except:
-    #         Stop_Monitor()
-    #         break
-    # Release()
-    # Close()
-    sleep(10)
+    sleep(20)
     Exit()

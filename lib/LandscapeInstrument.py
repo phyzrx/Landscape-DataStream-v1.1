@@ -148,18 +148,26 @@ class LandscapeInstrument():
         return self
 
     def open_resource(self):
+        opened = False
         try:
+            self.ins = self.ins
+        except:
+            rm = pyvisa.ResourceManager()
+            self.ins = rm.open_resource(self.Instrument_Address)
+            print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
+            opened = True
+        if self.ins == None:
             rm = pyvisa.ResourceManager()
             self.ins = rm.open_resource(self.Instrument_Address)
             if not self.Read_Termination == "":
                 self.ins.read_termination = self.Read_Termination
             print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
-        except Exception as e:
-            try:
+            opened = True
+        else:
+            if not self.Read_Termination == "":
                 self.ins.read_termination = self.Read_Termination
-            except:
-                pass
-            print("%s @ %s : resource Open with error, resource might already been openned" % (self.Description, str(self.Instrument_Address)))
+            if not opened:
+                print("%s @ %s : resource might already Opened" %(self.Description, str(self.Instrument_Address)))
 
     def initialize(self):
         print("%s @ %s : Default Initialize Function is Called" % (self.Description, str(self.Instrument_Address)))
@@ -341,6 +349,7 @@ class LandscapeInstrument():
 
     def start_monitor(self):
         if self.monitor_stop:
+            self.monitor_stop = False
             self.open_resource()
             import threading as th
             self.monitor_thread = th.Thread(target=self.monitor_loop)
@@ -365,8 +374,13 @@ class LandscapeInstrument():
     def release_resource(self):
         try:
             self.ins.close()
+            self.ins = None
             print("%s @ %s : resource is Released" % (self.Description, str(self.Instrument_Address)))
         except:
+            try:
+                self.ins = None
+            except:
+                pass
             print("%s @ %s : resource Release with error, resource might already been released" % (self.Description, str(self.Instrument_Address)))
         return self
 

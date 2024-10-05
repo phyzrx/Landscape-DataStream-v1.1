@@ -120,6 +120,10 @@ class LandscapeInstrument():
                 raise err("%s @ %s : at %g Call with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
         
         self.monitor_stop = True
+        try:
+            self.monitor_thread.join()
+        except:
+            pass
 
         if not self.Read_Termination == "":
             self.ins.read_termination = self.Read_Termination

@@ -108,16 +108,6 @@ class LandscapeInstrument():
             insaddress = self.Instrument_Address
         else:
             self.Instrument_Address = insaddress
-        try:
-            self.ins = self.ins
-            print("%s @ %s : resource is already Called" %(self.Description, str(insaddress)))
-        except:
-            try:
-                rm = pyvisa.ResourceManager()
-                self.ins = rm.open_resource(insaddress)
-                print("%s @ %s : resource is Called" %(self.Description, str(insaddress)))
-            except Exception as e:
-                raise err("%s @ %s : at %g resource Call with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
         
         self.monitor_stop = True
         try:
@@ -156,9 +146,21 @@ class LandscapeInstrument():
         self.rresult = ""
         self.buff = self.Buffer.startswith("T") or self.Buffer.startswith("t")
 
-        print("%s @ %s : is Called" %(self.Description, str(insaddress)))
+        print("%s @ %s : is Called" %(self.Description, str(self.Instrument_Address)))
 
         return self
+
+    def open_resource(self):
+        try:
+            self.ins = self.ins
+            print("%s @ %s : resource is already Opened" %(self.Description, str(self.Instrument_Address)))
+        except:
+            try:
+                rm = pyvisa.ResourceManager()
+                self.ins = rm.open_resource(self.Instrument_Address)
+                print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
+            except Exception as e:
+                raise err("%s @ %s : at %g resource Open with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
 
     def initialize(self):
         print("%s @ %s : Default Initialize Function is Called" % (self.Description, str(self.Instrument_Address)))
@@ -357,7 +359,7 @@ class LandscapeInstrument():
         print("%s @ %s : is Closed" % (self.Description, str(self.Instrument_Address)))
         return self
 
-    def release(self):
+    def release_resource(self):
         try:
             self.ins.close()
             print("%s @ %s : resource is Released" % (self.Description, str(self.Instrument_Address)))

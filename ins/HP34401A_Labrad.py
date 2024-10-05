@@ -39,14 +39,17 @@ class HP34401A(LandscapeInstrument):
 ins = None
 
 def Call(parameters):
+    result = "Called"
+    return (parameters, result)
+
+def Open():
     import labrad
     global ins
     print("Calling")
     cxn = labrad.connect()
     ins = cxn.hp34401a
     ins.select_device("phys-feynman GPIB Bus - GPIB0::22::INSTR")
-    result = "Called"
-    return (parameters, result)
+    return "Opened"
 
 def Initialize(*args):
     global ins

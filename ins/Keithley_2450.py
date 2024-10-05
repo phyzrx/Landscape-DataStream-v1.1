@@ -67,6 +67,13 @@ def Call(parameters):
     ins.call()
     return (ins.instrument_parameters(), result)
 
+def Open(*args):
+    global ins
+    print("Openning")
+    result = "Opened"
+    ins.open_resource()
+    return result
+
 def Initialize(*args):
     global ins
     result = "Initialized"
@@ -125,7 +132,7 @@ def Log():
 
 def Release():
     global ins
-    ins.release()
+    ins.release_resource()
     return "Released"
 
 def Close():
@@ -141,12 +148,13 @@ def Exit():
 if __name__ == "__main__":
     print(Identify("K2450-1"))
     Call([("Instrument Address", r"TCPIP0::192.168.1.101::inst0::INSTR")])
+    Open()
     Initialize()
     Retrieve()
     sleep(1)
     while True:
         try:
-            (result, rb, rt) = Approach(0)
+            (result, rb, rt) = Approach(1)
             Write()
             Read()
             sleep(0.5)
@@ -155,5 +163,6 @@ if __name__ == "__main__":
         except:
             Close()
             break
+    Release()
     Close()
     Exit()

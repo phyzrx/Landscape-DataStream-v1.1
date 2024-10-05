@@ -85,6 +85,13 @@ def Call(parameters):
     ins.call()
     return (ins.instrument_parameters(), result)
 
+def Open(*args):
+    global ins
+    print("Openning")
+    result = "Opened"
+    ins.open_resource()
+    return result
+
 def Initialize(*args):
     global ins
     result = "Initialized"
@@ -215,7 +222,7 @@ def Log():
 
 def Release():
     global ins
-    ins.release()
+    ins.release_resource()
     return "Released"
 
 def Close():
@@ -232,6 +239,7 @@ if __name__ == "__main__":
     k = Magnet4G()
     k.Instrument_Address = "TCPIP0::192.168.1.21::7777::SOCKET"
     Call(k.instrument_parameters())
+    Open()
     Initialize()
     Start_Monitor()
     while True:
@@ -243,5 +251,6 @@ if __name__ == "__main__":
         except:
             Stop_Monitor()
             break
+    Release()
     Close()
     Exit()

@@ -161,6 +161,11 @@ def Read():
         result = result + raw.split(",")[int(i)].split(":")[1] + ", "
     return result
 
+def Release():
+    global ins
+    ins.release()
+    return "Released"
+
 def Close():
     global ins
     ins.close()

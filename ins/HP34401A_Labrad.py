@@ -76,6 +76,10 @@ def Read():
         pass
     return result
 
+def Release():
+    global ins
+    return "Released"
+
 def Close():
     global ins
     return "Closed"

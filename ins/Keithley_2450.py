@@ -123,6 +123,11 @@ def Log():
     global ins
     return ins.log()
 
+def Release():
+    global ins
+    ins.release()
+    return "Released"
+
 def Close():
     global ins
     ins.close()

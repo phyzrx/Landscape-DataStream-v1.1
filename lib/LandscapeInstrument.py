@@ -117,7 +117,7 @@ class LandscapeInstrument():
                 self.ins = rm.open_resource(insaddress)
                 print("%s @ %s : resource is Called" %(self.Description, str(insaddress)))
             except Exception as e:
-                raise err("%s @ %s : at %g Call with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
+                raise err("%s @ %s : at %g resource Call with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
         
         self.monitor_stop = True
         try:
@@ -155,6 +155,8 @@ class LandscapeInstrument():
         self.md = max(0, self.md)
         self.rresult = ""
         self.buff = self.Buffer.startswith("T") or self.Buffer.startswith("t")
+
+        print("%s @ %s : is Called" %(self.Description, str(insaddress)))
 
         return self
 
@@ -202,8 +204,8 @@ class LandscapeInstrument():
         except Exception as e:
             print("%s @ %s : at %g Approached with Error" % (self.Description, str(self.Instrument_Address), self.Previous_Value))
             print(e)
-            raise err("%s @ %s : at %g Approached with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
             rbool = True
+            raise err("%s @ %s : at %g Approached with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
         return rbool
     
     def scan(self, sv):
@@ -352,6 +354,15 @@ class LandscapeInstrument():
         return self.rresult.replace("\r","").replace("\n","")
     
     def close(self):
+        print("%s @ %s : is Closed" % (self.Description, str(self.Instrument_Address)))
+        return self
+
+    def release(self):
+        try:
+            self.ins.close()
+            print("%s @ %s : resource is Released" % (self.Description, str(self.Instrument_Address)))
+        except:
+            print("%s @ %s : resource Release with error, resource might already been released" % (self.Description, str(self.Instrument_Address)))
         return self
 
     def exit(self):
@@ -363,7 +374,7 @@ class LandscapeInstrument():
             self.ins.close()
         except:
             pass
-        print("%s @ %s : is Closed" % (self.Description, str(self.Instrument_Address)))
+        print("%s @ %s : is Exited" % (self.Description, str(self.Instrument_Address)))
         sys.exit()
         return self
     

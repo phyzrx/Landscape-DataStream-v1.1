@@ -213,6 +213,11 @@ def Log():
     result = result +  str(b) + "T"
     return (ins.Read_Name, result)
 
+def Release():
+    global ins
+    ins.release()
+    return "Released"
+
 def Close():
     global ins
     ins.close()

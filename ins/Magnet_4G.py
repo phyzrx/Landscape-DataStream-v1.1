@@ -194,6 +194,23 @@ def Read():
     result = result + str(b)
     return result
 
+def Start_Monitor():
+    global ins
+    ins.call()
+    ins.start_monitor()
+
+def Stop_Monitor():
+    global ins
+    ins.stop_monitor()
+
+def Log():
+    global ins
+    result = ""
+    result = ins.log()
+    b = ut.findnum(result)[0] * ins.c /10000
+    result = result + str(b)
+    return (ins.Read_Name, result)
+
 def Close():
     global ins
     ins.close()

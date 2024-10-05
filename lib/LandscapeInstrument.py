@@ -340,11 +340,14 @@ class LandscapeInstrument():
                 print("%s @ %s : Monitor: %s" % (self.Description, str(self.Instrument_Address), self.rresult.replace("\r","").replace("\n","")))
 
     def start_monitor(self):
-        if not self.monitor_stop:
+        if self.monitor_stop:
             self.open_resource()
             import threading as th
             self.monitor_thread = th.Thread(target=self.monitor_loop)
             self.monitor_thread.start()
+            print("%s @ %s : monitor loop Started" % (self.Description, str(self.Instrument_Address)))
+        else:
+            print("%s @ %s : monitor loop might already Started" % (self.Description, str(self.Instrument_Address)))
         return self
     
     def stop_monitor(self):

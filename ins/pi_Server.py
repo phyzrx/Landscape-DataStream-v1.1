@@ -90,7 +90,8 @@ def Call(parameters):
     ins.setup(parameters)
     ins.call()
     ins.setmode()
-    ins.
+    ins.open_resource()
+    ins.start_monitor()
     return (ins.instrument_parameters(), result)
 
 def Open(*args):
@@ -195,17 +196,19 @@ if __name__ == "__main__":
     k.Instrument_Address = "TCPIP0::192.168.1.20::6666::SOCKET"
     Call(k.instrument_parameters())
     Open()
-    Initialize()
-    Start_Monitor()
-    while True:
-        try:
-            sleep(1)
-            print("---------")
-            print(Log())
-            print("---------")
-        except:
-            Stop_Monitor()
-            break
-    Release()
-    Close()
+    # Initialize()
+    # Start_Monitor()
+    # sleep(2)
+    # while True:
+    #     try:
+    #         sleep(1)
+    #         print("---------")
+    #         print(Log())
+    #         print("---------")
+    #     except:
+    #         Stop_Monitor()
+    #         break
+    # Release()
+    # Close()
+    sleep(10)
     Exit()

@@ -112,6 +112,7 @@ def Read():
 
 def Start_Monitor():
     global ins
+    ins.call()
     ins.start_monitor()
 
 def Stop_Monitor():

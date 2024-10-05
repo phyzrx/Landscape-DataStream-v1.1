@@ -81,10 +81,6 @@ class piServer(LandscapeInstrument):
         else:
             pass
 
-    @InitializeDecorator
-    def initialize(self):
-        return self
-
 ins = piServer() # Instrument Class
 
 def Call(parameters):
@@ -139,6 +135,8 @@ def Approach(sv):
 
 def Start_Monitor():
     global ins
+    ins.setmode("Monitor All")
+    ins.call()
     ins.start_monitor()
 
 def Stop_Monitor():
@@ -170,11 +168,8 @@ def Close():
 
 if __name__ == "__main__":
     k = piServer()
-    print(k.instrument_parameters())
-    k.setmode("Monitor All")
     k.Instrument_Address = "TCPIP0::192.168.1.20::6666::SOCKET"
     Call(k.instrument_parameters())
-    print(k.instrument_parameters())
     Initialize()
     Start_Monitor()
     while True:

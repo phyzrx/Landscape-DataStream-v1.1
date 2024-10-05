@@ -300,7 +300,12 @@ class LandscapeInstrument():
                         if not self.buff:
                             rresult = rresult + self.ins.read() + ","
                         else:
-                            sleep(self.wd)
+                            delay = 0
+                            while delay < self.wd:
+                                sleep(0.2)
+                                delay = delay + 0.2
+                                if self.monitor_stop:
+                                    break
                 except Exception as e:
                     print("%s @ %s : Write with Error" % (self.Description, str(self.Instrument_Address)))
                     print(e)
@@ -313,7 +318,12 @@ class LandscapeInstrument():
                     else:
                         pass
                     self.rresult = rresult
-                    sleep(self.md)
+                    delay = 0
+                    while delay < self.md:
+                        sleep(0.2)
+                        delay = delay + 0.2
+                        if self.monitor_stop:
+                            break
                 except Exception as e:
                     print("%s @ %s : Read with Error" % (self.Description, str(self.Instrument_Address)))
                     print(e)

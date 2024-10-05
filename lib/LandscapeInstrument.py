@@ -115,9 +115,6 @@ class LandscapeInstrument():
         except:
             pass
 
-        if not self.Read_Termination == "":
-            self.ins.read_termination = self.Read_Termination
-
         self.rs = abs(LandscapeUtilities.findnum(self.Ramp_Step)[0])
         if self.rs == 0:
             self.rs = float("+inf")
@@ -154,6 +151,8 @@ class LandscapeInstrument():
         try:
             rm = pyvisa.ResourceManager()
             self.ins = rm.open_resource(self.Instrument_Address)
+            if not self.Read_Termination == "":
+                self.ins.read_termination = self.Read_Termination
             print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
         except Exception as e:
             print("%s @ %s : resource Open with error, resource might already been openned" % (self.Description, str(self.Instrument_Address)))

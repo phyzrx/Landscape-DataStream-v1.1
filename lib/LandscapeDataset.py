@@ -72,29 +72,29 @@ class LandscapeDataset():
     
     def preview_parameters(self):
         all_names = dir(self)
-        p = []
+        dataset_parameters = []
         for name in all_names:
             if not name.startswith("__"):
                 tpe = type(self.__getattribute__(name))
                 value = str(self.__getattribute__(name))
                 if not value.startswith("<bound method"):
                     if tpe == str:
-                        p = p + [(str(name).replace("_", " "), str(value))]
-        k = []
+                        dataset_parameters = dataset_parameters + [(str(name).replace("_", " "), str(value))]
+        data_processing = []
         for key, value in self.Data_Processing.items():
-            k = k + [(str(key), str(value))]
-        return (p, self.Scan_Instrument, self.Read_Instrument, k)
+            data_processing = data_processing + [(str(key), str(value))]
+        return (dataset_parameters, self.Scan_Instrument, self.Read_Instrument, data_processing)
 
     def dataset_parameters(self):
         all_names = dir(self)
-        p = []
+        dataset_parameters = []
         for name in all_names:
             if not name.startswith("__"):
                 tpe = type(self.__getattribute__(name))
                 value = str(self.__getattribute__(name))
                 if not value.startswith("<bound method"):
                     if tpe == str:
-                        p = p + [(str(name).replace("_", " "), str(value))]
+                        dataset_parameters = dataset_parameters + [(str(name).replace("_", " "), str(value))]
 
         if self.Scan_Array == []:
             if self.x_start == None or self.x_end == None or (self.x_step == None and self.x_number == None):
@@ -113,10 +113,10 @@ class LandscapeDataset():
                     pass
                 else:
                     pass
-        k = []
+        data_processing = []
         for key, value in self.Data_Processing.items():
-            k = k + [(str(key), str(value))]
-        return (p, self.Scan_Instrument, self.Read_Instrument, self.Scan_Array, k)
+            data_processing = data_processing + [(str(key), str(value))]
+        return (dataset_parameters, self.Scan_Instrument, self.Read_Instrument, self.Scan_Array, data_processing)
     
     def preview(self, *args):
         while type(args) == tuple:

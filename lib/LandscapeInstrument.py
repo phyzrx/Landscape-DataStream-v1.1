@@ -365,7 +365,13 @@ class LandscapeInstrument():
         return self
 
     def log(self):
-        return self.rresult.replace("\r","").replace("\n","")
+        result = ""
+        try:
+            if not self.monitor_stop:
+                result = self.rresult.replace("\r","").replace("\n","")
+        except:
+            pass
+        return result
     
     def close(self):
         print("%s @ %s : is Closed" % (self.Description, str(self.Instrument_Address)))

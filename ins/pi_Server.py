@@ -146,10 +146,12 @@ def Start_Monitor():
     ins.setmode("Monitor All")
     ins.call()
     ins.start_monitor()
+    return "Start Monitor"
 
 def Stop_Monitor():
     global ins
     ins.stop_monitor()
+    return "Stop Monitor"
 
 def Log():
     global ins

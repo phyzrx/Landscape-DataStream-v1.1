@@ -8,8 +8,7 @@ import inspect
 def i1(*args):
     from Keithley_2450 import Keithley2450
     p = Keithley2450(inspect.getfile(Keithley2450))
-    p.Description = "K2450-2"
-    p.Type = "Default"
+    p.Description = "K2450-1"
     p.Instrument_Address = "TCPIP0::192.168.1.101::inst0::INSTR"
     p.Ramp_Step = "0.5"
     return (p.Description, p.instrument_parameters())

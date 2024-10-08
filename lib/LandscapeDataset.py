@@ -74,16 +74,16 @@ class LandscapeDataset():
         all_names = dir(self)
         dataset_parameters = []
         for name in all_names:
-            if not name.startswith("__"):
+            if not (name.startswith("__") or name.startswith("_")):
                 tpe = type(self.__getattribute__(name))
                 value = str(self.__getattribute__(name))
                 if not value.startswith("<bound method"):
                     if tpe == str:
                         dataset_parameters = dataset_parameters + [(str(name).replace("_", " "), str(value))]
         data_processing = []
-        for key, value in self.__Data_Processing.items():
+        for key, value in self._Data_Processing.items():
             data_processing = data_processing + [(str(key), str(value))]
-        return (dataset_parameters, self.__Scan_Instrument, self.__Read_Instrument, data_processing)
+        return (dataset_parameters, self._Scan_Instrument, self._Read_Instrument, data_processing)
 
     def dataset_parameters(self):
         all_names = dir(self)
@@ -96,27 +96,27 @@ class LandscapeDataset():
                     if tpe == str:
                         dataset_parameters = dataset_parameters + [(str(name).replace("_", " "), str(value))]
 
-        if self.__Scan_Array == []:
+        if self._Scan_Array == []:
             if self.x_start == None or self.x_end == None or (self.x_step == None and self.x_number == None):
                 pass
             elif self.y_start == None or self.y_end == None or (self.y_step == None and self.y_number == None):
                 if not self.x_step == None:
-                    self.__Scan_Array = LandscapeUtilities.sarray1D(float(self.x_start), float(self.x_end), float(self.x_step))
+                    self._Scan_Array = LandscapeUtilities.sarray1D(float(self.x_start), float(self.x_end), float(self.x_step))
                 else:
-                    self.__Scan_Array = LandscapeUtilities.sarray1Dnum(float(self.x_start), float(self.x_end), float(self.x_number))
+                    self._Scan_Array = LandscapeUtilities.sarray1Dnum(float(self.x_start), float(self.x_end), float(self.x_number))
             else:
                 if (not self.x_step == None) and (not self.y_step == None):
-                    self.__Scan_Array = LandscapeUtilities.sarray2D(float(self.x_start), float(self.x_end), float(self.x_step), float(self.y_start), float(self.y_end), float(self.y_step))
+                    self._Scan_Array = LandscapeUtilities.sarray2D(float(self.x_start), float(self.x_end), float(self.x_step), float(self.y_start), float(self.y_end), float(self.y_step))
                 elif (not self.x_number == None) and (not self.y_number == None):
-                    self.__Scan_Array = LandscapeUtilities.sarray2Dnum(float(self.x_start), float(self.x_end), float(self.x_number), float(self.y_start), float(self.y_end), float(self.y_number))
+                    self._Scan_Array = LandscapeUtilities.sarray2Dnum(float(self.x_start), float(self.x_end), float(self.x_number), float(self.y_start), float(self.y_end), float(self.y_number))
                 elif False:
                     pass
                 else:
                     pass
         data_processing = []
-        for key, value in self.__Data_Processing.items():
+        for key, value in self._Data_Processing.items():
             data_processing = data_processing + [(str(key), str(value))]
-        return (dataset_parameters, self.__Scan_Instrument, self.__Read_Instrument, self.__Scan_Array, data_processing)
+        return (dataset_parameters, self._Scan_Instrument, self._Read_Instrument, self._Scan_Array, data_processing)
     
     def preview(self, *args):
         while type(args) == tuple:
@@ -135,15 +135,15 @@ class LandscapeDataset():
         return self.Description
 
     def scan(self, Instrument_Description, Instrument_Parameters = []):
-        self.__Scan_Instrument = self.__Scan_Instrument + [(Instrument_Description, Instrument_Parameters)]
+        self._Scan_Instrument = self._Scan_Instrument + [(Instrument_Description, Instrument_Parameters)]
         return self
     
     def read(self, Instrument_Description, Instrument_Parameters = []):
-        self.__Read_Instrument = self.__Read_Instrument + [(Instrument_Description, Instrument_Parameters)]
+        self._Read_Instrument = self._Read_Instrument + [(Instrument_Description, Instrument_Parameters)]
         return self
     
     def process(self, name = "", function = ""):
-        self.__Data_Processing.update({name: function})
+        self._Data_Processing.update({name: function})
         return self
     
 if __name__ == "__main__":

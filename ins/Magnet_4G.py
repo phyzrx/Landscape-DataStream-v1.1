@@ -56,20 +56,20 @@ class Magnet4G(LandscapeInstrument):
     @InitializeDecorator
     def initialize(self):
         if self.Mode == "Z":
-            self.ins.write("REMOTE")
-            self.ins.write("CHAN 1")
-            self.ins.write("UNITS A")
+            self.raw_write("REMOTE")
+            self.raw_write("CHAN 1")
+            self.raw_write("UNITS A")
             self.rate = min(ut.findnum(self.Ramp_Step)[0], 0.1)
             self.rate = max(self.rate, 0.01)
-            self.ins.write("RATE 0 {:.4g}".format(self.rate))
+            self.raw_write("RATE 0 {:.4g}".format(self.rate))
             self.c = 972.0 # Gauss/A
         elif self.Mode == "X":
-            self.ins.write("REMOTE")
-            self.ins.write("CHAN 2")
-            self.ins.write("UNITS A")
+            self.raw_write("REMOTE")
+            self.raw_write("CHAN 2")
+            self.raw_write("UNITS A")
             self.rate = min(ut.findnum(self.Ramp_Step)[0], 0.015)
             self.rate = max(self.rate, 0.01)
-            self.ins.write("RATE 0 {:.4g}".format(self.rate))
+            self.raw_write("RATE 0 {:.4g}".format(self.rate))
             self.c = 551.6 # Gauss/A
         else:
             pass

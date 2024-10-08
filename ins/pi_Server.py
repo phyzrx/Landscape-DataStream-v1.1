@@ -89,9 +89,10 @@ def Call(parameters):
     result = "Called"
     ins.setup(parameters)
     ins.setmode()
+    ins_parameters = ins.instrument_parameters()
     ins.call()
     ins.start_monitor()
-    return (ins.instrument_parameters(), result)
+    return (ins_parameters, result)
 
 def Open(*args):
     global ins

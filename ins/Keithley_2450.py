@@ -131,7 +131,7 @@ def Stop_Monitor():
 
 def Log():
     global ins
-    return ins.log()
+    return (ins.Read_Name, ins.log())
 
 def Release():
     global ins

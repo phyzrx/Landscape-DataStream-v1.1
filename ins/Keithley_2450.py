@@ -44,12 +44,12 @@ class Keithley2450(LandscapeInstrument):
     @InitializeDecorator
     def initialize(self):
         if self.Mode == "Source Voltage - Measure Current":
-            self.ins.clear()
-            self.ins.write(":SENS:FUNC \"CURR\"")
-            self.ins.write(":SENS:CURR:UNIT AMP")
-            self.ins.write(":SENS:CURR:NPLC 1")
-            self.ins.write(":SENS:CURR:RANG 1E-6")
-            self.ins.write("TRAC:CLE \"defbuffer1\"")
+            self.raw_clear()
+            self.raw_write(":SENS:FUNC \"CURR\"")
+            self.raw_write(":SENS:CURR:UNIT AMP")
+            self.raw_write(":SENS:CURR:NPLC 1")
+            self.raw_write(":SENS:CURR:RANG 1E-6")
+            self.raw_write("TRAC:CLE \"defbuffer1\"")
         else:
             pass
         return self

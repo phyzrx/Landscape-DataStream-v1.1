@@ -141,7 +141,7 @@ class LandscapeInstrument():
         self.__md = LandscapeUtilities.findnum(self.Monitor_Delay)[0]
         self.__md = max(0, self.__md)
         self.__rresult = ""
-        self.__buff = self.__buffer.startswith("T") or self.__buffer.startswith("t")
+        self.__buff = self.Buffer.startswith("T") or self.Buffer.startswith("t")
 
         print("%s @ %s : is Called" %(self.Description, str(self.Instrument_Address)))
 

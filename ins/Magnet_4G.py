@@ -82,8 +82,9 @@ def Call(parameters):
     print("Calling")
     result = "Called"
     ins.setup(parameters)
+    ins_parameters = ins.instrument_parameters()
     ins.call()
-    return (ins.instrument_parameters(), result)
+    return (ins_parameters, result)
 
 def Open(*args):
     global ins

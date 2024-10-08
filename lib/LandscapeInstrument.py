@@ -115,6 +115,11 @@ class LandscapeInstrument():
         except:
             pass
 
+        try:
+            self._ins = self._ins
+        except:
+            self._ins = None
+
         self._rs = abs(LandscapeUtilities.findnum(self.Ramp_Step)[0])
         if self._rs == 0:
             self._rs = float("+inf")

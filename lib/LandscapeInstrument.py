@@ -17,7 +17,7 @@ def InitializeDecorator(func):
     def wrapper(*args, **kwargs):
         try:
             fc = func(*args, **kwargs)
-            fc.ins.clear()
+            fc.raw_clear()
             print("%s @ %s : is Initialzied" % (fc.Description, str(fc.Instrument_Address)))
         except Exception as e:
             print("%s @ %s : Initialze with Error" % (fc.Description, str(fc.Instrument_Address)))
@@ -31,7 +31,7 @@ def CallDecorator(func):
     def wrapper(*args, **kwargs):
         try:
             fc = func(*args, **kwargs)
-            fc.ins.clear()
+            fc.raw_clear()
             print("%s @ %s : is Called" % (fc.Description, str(fc.Instrument_Address)))
         except Exception as e:
             print("%s @ %s : Call with Error" % (fc.Description, str(fc.Instrument_Address)))

@@ -84,7 +84,7 @@ class LandscapeInstrument():
         all_names = dir(self)
         p = []
         for name in all_names:
-            if not name.startswith("__"):
+            if not (name.startswith("__") or name.startswith("_")):
                 value = str(self.__getattribute__(name))
                 if not value.startswith("<bound method"):
                     p = p + [(str(name).replace("_", " "), str(value))]
@@ -109,39 +109,39 @@ class LandscapeInstrument():
         else:
             self.Instrument_Address = insaddress
         
-        self.__monitor_stop = True
+        self._monitor_stop = True
         try:
-            self.__monitor_thread.join()
+            self._monitor_thread.join()
         except:
             pass
 
-        self.__rs = abs(LandscapeUtilities.findnum(self.Ramp_Step)[0])
-        if self.__rs == 0:
-            self.__rs = float("+inf")
-        self.__rd = LandscapeUtilities.findnum(self.Ramp_Delay)[0]
-        self.__rd = max(0, self.__rd)
+        self._rs = abs(LandscapeUtilities.findnum(self.Ramp_Step)[0])
+        if self._rs == 0:
+            self._rs = float("+inf")
+        self._rd = LandscapeUtilities.findnum(self.Ramp_Delay)[0]
+        self._rd = max(0, self._rd)
         try:
-            self.__smin = min(LandscapeUtilities.findnum(self.Scan_Limit)[0], LandscapeUtilities.findnum(self.Scan_Limit)[1])
-            self.__smax = max(LandscapeUtilities.findnum(self.Scan_Limit)[0], LandscapeUtilities.findnum(self.Scan_Limit)[1])
+            self._smin = min(LandscapeUtilities.findnum(self.Scan_Limit)[0], LandscapeUtilities.findnum(self.Scan_Limit)[1])
+            self._smax = max(LandscapeUtilities.findnum(self.Scan_Limit)[0], LandscapeUtilities.findnum(self.Scan_Limit)[1])
         except:
             try:
-                self.__smax = LandscapeUtilities.findnum(self.Scan_Limit)[0]
-                self.__smin = float("-inf")
+                self._smax = LandscapeUtilities.findnum(self.Scan_Limit)[0]
+                self._smin = float("-inf")
             except:
-                self.__smax = float("+inf")
-                self.__smin = float("-inf")
-        self.__rc = self.Read_Command.split("\\")
+                self._smax = float("+inf")
+                self._smin = float("-inf")
+        self._rc = self.Read_Command.split("\\")
         trc = []
-        for cmd in self.__rc:
+        for cmd in self._rc:
             if not trc == "":
                 trc = trc + [cmd]
-        self.__rc = trc
-        self.__wd = LandscapeUtilities.findnum(self.Write_Delay)[0]
-        self.__wd = max(0, self.__wd)
-        self.__md = LandscapeUtilities.findnum(self.Monitor_Delay)[0]
-        self.__md = max(0, self.__md)
-        self.__rresult = ""
-        self.__buff = self.Buffer.startswith("T") or self.Buffer.startswith("t")
+        self._rc = trc
+        self._wd = LandscapeUtilities.findnum(self.Write_Delay)[0]
+        self._wd = max(0, self._wd)
+        self._md = LandscapeUtilities.findnum(self.Monitor_Delay)[0]
+        self._md = max(0, self._md)
+        self._rresult = ""
+        self._buff = self.Buffer.startswith("T") or self.Buffer.startswith("t")
 
         print("%s @ %s : is Called" %(self.Description, str(self.Instrument_Address)))
 
@@ -150,29 +150,29 @@ class LandscapeInstrument():
     def open_resource(self):
         opened = False
         try:
-            self.__ins = self.__ins
+            self._ins = self._ins
         except:
             rm = pyvisa.ResourceManager()
-            self.__ins = rm.open_resource(self.Instrument_Address)
+            self._ins = rm.open_resource(self.Instrument_Address)
             print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
             opened = True
-        if self.__ins == None:
+        if self._ins == None:
             rm = pyvisa.ResourceManager()
-            self.__ins = rm.open_resource(self.Instrument_Address)
+            self._ins = rm.open_resource(self.Instrument_Address)
             if not self.Read_Termination == "":
-                self.__ins.read_termination = self.Read_Termination
+                self._ins.read_termination = self.Read_Termination
             print("%s @ %s : resource is Opened" %(self.Description, str(self.Instrument_Address)))
             opened = True
         else:
             if not self.Read_Termination == "":
-                self.__ins.read_termination = self.Read_Termination
+                self._ins.read_termination = self.Read_Termination
             if not opened:
                 print("%s @ %s : resource might already Opened" %(self.Description, str(self.Instrument_Address)))
 
     def initialize(self):
         print("%s @ %s : Default Initialize Function is Called" % (self.Description, str(self.Instrument_Address)))
         try:
-            self.__ins.clear()
+            self._ins.clear()
             print("%s @ %s : is Initialzied" % (self.Description, str(self.Instrument_Address)))
         except Exception as e:
             print("%s @ %s : Initialze with Error" % (self.Description, str(self.Instrument_Address)))
@@ -182,7 +182,7 @@ class LandscapeInstrument():
     
     def retrieve(self):
         try:
-            self.Previous_Value = LandscapeUtilities.findnum(self.__ins.query(self.Retrieve_Command))[0]
+            self.Previous_Value = LandscapeUtilities.findnum(self._ins.query(self.Retrieve_Command))[0]
             print("%s @ %s : was at Value = %g"  % (self.Description, str(self.Instrument_Address), self.Previous_Value))
         except Exception as e:
             print("%s @ %s : Retrieve with Error" % (self.Description, str(self.Instrument_Address)))
@@ -192,19 +192,19 @@ class LandscapeInstrument():
 
     def approach(self, sv):
         try:
-            sv = min(sv, self.__smax)
-            sv = max(sv, self.__smin)
+            sv = min(sv, self._smax)
+            sv = max(sv, self._smin)
             target = sv
             if sv == self.Previous_Value:
                 pass
             else:
                 if sv >= self.Previous_Value:
-                    sv = min(self.Previous_Value+self.__rs, sv)
+                    sv = min(self.Previous_Value+self._rs, sv)
                 else:
-                    sv = max(self.Previous_Value-self.__rs, sv)
-                self.__ins.write(self.Scan_Command.format(sv))
+                    sv = max(self.Previous_Value-self._rs, sv)
+                self._ins.write(self.Scan_Command.format(sv))
                 self.Previous_Value = sv
-                sleep(self.__rd)
+                sleep(self._rd)
             rbool = sv == target
             if rbool:
                 print("%s @ %s : Approached Target = %g" % (self.Description, str(self.Instrument_Address), target))
@@ -220,7 +220,7 @@ class LandscapeInstrument():
     def scan(self, sv):
         startv = self.Previous_Value
         endv = sv
-        print("%s @ %s : starts Scan from %g to %g at step %g" % (self.Description, str(self.Instrument_Address), startv, endv, self.__rs))
+        print("%s @ %s : starts Scan from %g to %g at step %g" % (self.Description, str(self.Instrument_Address), startv, endv, self._rs))
         while True:
             try:
                 if self.approach(sv):
@@ -232,17 +232,17 @@ class LandscapeInstrument():
         return self
 
     def write(self):
-        if self.__monitor_stop:
+        if self._monitor_stop:
             rresult = ""
             try:
-                for cmd in self.__rc:
-                    self.__ins.write(cmd)
-                    if not self.__buff:
-                        rresult = rresult + self.__ins.read() + ","
+                for cmd in self._rc:
+                    self._ins.write(cmd)
+                    if not self._buff:
+                        rresult = rresult + self._ins.read() + ","
                     else:
-                        sleep(self.__wd)
-                if not self.__buff:
-                    self.__rresult = rresult
+                        sleep(self._wd)
+                if not self._buff:
+                    self._rresult = rresult
             except Exception as e:
                 print("%s @ %s : Write with Error" % (self.Description, str(self.Instrument_Address)))
                 print(e)
@@ -252,29 +252,29 @@ class LandscapeInstrument():
         return self
 
     def read(self):
-        if self.__monitor_stop:
+        if self._monitor_stop:
             try:
                 rresult = ""
-                if self.__buff:
-                    for cmd in self.__rc:
-                        rresult = rresult + self.__ins.read() + ","
-                    self.__rresult = rresult
+                if self._buff:
+                    for cmd in self._rc:
+                        rresult = rresult + self._ins.read() + ","
+                    self._rresult = rresult
                 else:
                     pass
             except Exception as e:
                 print("%s @ %s : Read with Error" % (self.Description, str(self.Instrument_Address)))
                 print(e)
-                self.__rresult = "ERROR+" + rresult + "+ERROR"
+                self._rresult = "ERROR+" + rresult + "+ERROR"
                 raise err("%s @ %s : Read with Error: %s" % (self.Description, str(self.Instrument_Address), str(e)))
-            print("%s @ %s : Read: %s" % (self.Description, str(self.Instrument_Address), self.__rresult.replace("\r","").replace("\n","")))
+            print("%s @ %s : Read: %s" % (self.Description, str(self.Instrument_Address), self._rresult.replace("\r","").replace("\n","")))
         else:
             pass
-        result = self.__rresult
+        result = self._rresult
         return result
 
     def raw_write(self, command):
         try:
-            self.__ins.write(str(command))
+            self._ins.write(str(command))
             print("%s @ %s : Write = %s" % (self.Description, str(self.Instrument_Address), str(command)))
         except Exception as e:
             print("%s @ %s : Write = %s with Error" % (self.Description, str(self.Instrument_Address), str(command)))
@@ -285,7 +285,7 @@ class LandscapeInstrument():
     def raw_read(self):
         result = ""
         try:
-            result = self.__ins.read()
+            result = self._ins.read()
             print("%s @ %s : Reads = %s" % (self.Description, str(self.Instrument_Address), str(result).replace("\r","").replace("\n","")))
         except Exception as e:
             print("%s @ %s : Read with Error" % (self.Description, str(self.Instrument_Address)))
@@ -295,7 +295,7 @@ class LandscapeInstrument():
     
     def raw_clear(self):
         try:
-            self.__ins.clear()
+            self._ins.clear()
             print("%s @ %s : Cleared" % (self.Description, str(self.Instrument_Address)))
         except Exception as e:
             print("%s @ %s : Clear with Error" % (self.Description, str(self.Instrument_Address)))
@@ -305,22 +305,22 @@ class LandscapeInstrument():
 
     def monitor_loop(self):
         while True:
-            if self.__monitor_stop:
+            if self._monitor_stop:
                 break
-            if not self.__monitor_stop:
+            if not self._monitor_stop:
                 ## Write Process
                 rresult = ""
                 try:
-                    for cmd in self.__rc:
-                        self.__ins.write(cmd)
-                        if not self.__buff:
-                            rresult = rresult + self.__ins.read() + ","
+                    for cmd in self._rc:
+                        self._ins.write(cmd)
+                        if not self._buff:
+                            rresult = rresult + self._ins.read() + ","
                         else:
                             delay = 0
-                            while delay < self.__wd:
+                            while delay < self._wd:
                                 sleep(0.2)
                                 delay = delay + 0.2
-                                if self.__monitor_stop:
+                                if self._monitor_stop:
                                     break
                 except Exception as e:
                     print("%s @ %s : Write with Error" % (self.Description, str(self.Instrument_Address)))
@@ -328,47 +328,47 @@ class LandscapeInstrument():
                     raise err("%s @ %s : Write with Error: %s" % (self.Description, str(self.Instrument_Address), str(e)))
                 ## Read Process
                 try:
-                    if self.__buff:
-                        for cmd in self.__rc:
-                            rresult = rresult + self.__ins.read() + ","
+                    if self._buff:
+                        for cmd in self._rc:
+                            rresult = rresult + self._ins.read() + ","
                     else:
                         pass
-                    self.__rresult = rresult
+                    self._rresult = rresult
                     delay = 0
-                    while delay < self.__md:
+                    while delay < self._md:
                         sleep(0.2)
                         delay = delay + 0.2
-                        if self.__monitor_stop:
+                        if self._monitor_stop:
                             break
                 except Exception as e:
                     print("%s @ %s : Read with Error" % (self.Description, str(self.Instrument_Address)))
                     print(e)
-                    self.__rresult = "ERROR+" + self.__rresult + "+ERROR"
+                    self._rresult = "ERROR+" + self._rresult + "+ERROR"
                     raise err("%s @ %s : Read with Error: %s" % (self.Description, str(self.Instrument_Address), str(e)))
-                print("%s @ %s : Monitor: %s" % (self.Description, str(self.Instrument_Address), self.__rresult.replace("\r","").replace("\n","")))
+                print("%s @ %s : Monitor: %s" % (self.Description, str(self.Instrument_Address), self._rresult.replace("\r","").replace("\n","")))
 
     def start_monitor(self):
-        if self.__monitor_stop:
-            self.__monitor_stop = False
+        if self._monitor_stop:
+            self._monitor_stop = False
             self.open_resource()
             import threading as th
-            self.__monitor_thread = th.Thread(target=self.monitor_loop)
-            self.__monitor_thread.start()
+            self._monitor_thread = th.Thread(target=self.monitor_loop)
+            self._monitor_thread.start()
             print("%s @ %s : monitor loop Started" % (self.Description, str(self.Instrument_Address)))
         else:
             print("%s @ %s : monitor loop might already Started" % (self.Description, str(self.Instrument_Address)))
         return self
     
     def stop_monitor(self):
-        self.__monitor_stop = True
-        self.__monitor_thread.join()
+        self._monitor_stop = True
+        self._monitor_thread.join()
         return self
 
     def log(self):
         result = ""
         try:
-            if not self.__monitor_stop:
-                result = self.__rresult.replace("\r","").replace("\n","")
+            if not self._monitor_stop:
+                result = self._rresult.replace("\r","").replace("\n","")
         except:
             pass
         return result
@@ -379,12 +379,12 @@ class LandscapeInstrument():
 
     def release_resource(self):
         try:
-            self.__ins.close()
-            self.__ins = None
+            self._ins.close()
+            self._ins = None
             print("%s @ %s : resource is Released" % (self.Description, str(self.Instrument_Address)))
         except:
             try:
-                self.__ins = None
+                self._ins = None
             except:
                 pass
             print("%s @ %s : resource Release with error, resource might already been released" % (self.Description, str(self.Instrument_Address)))
@@ -396,7 +396,7 @@ class LandscapeInstrument():
         except:
             pass
         try:
-            self.__ins.close()
+            self._ins.close()
         except:
             pass
         print("%s @ %s : is Exited" % (self.Description, str(self.Instrument_Address)))

@@ -57,6 +57,7 @@ class Keithley2450(LandscapeInstrument):
 ins = None # Instrument Class
 
 def Identify(*arg):
+    global ins
     return ins.identify(*arg)
 
 def Call(parameters):

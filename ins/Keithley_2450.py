@@ -62,11 +62,7 @@ def Identify(*arg):
 
 def Call(parameters):
     global ins
-    if ins == None:
-        ins = Keithley2450()
-    else:
-        ins.exit()
-        ins = Keithley2450()
+    ins = Keithley2450()
     print("Calling")
     result = "Called"
     ins.setup(parameters)

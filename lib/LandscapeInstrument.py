@@ -93,10 +93,23 @@ class LandscapeInstrument():
     def get_parameter(self, parameter_name=""):
         value = ""
         try:
-            value = str(self.__getattribute__(parameter_name))
+            if parameter_name == "":
+                value = str(self._sync_status)
+            else:
+                value = str(self.__getattribute__(parameter_name))
         except:
             pass
         return value
+    
+    def parameter_in(self, parameters):
+        self.setup(parameters)
+        return self
+    
+    def parameter_out(self, parameter_names):
+        result = []
+        for parameter_name in parameter_names:
+            result = result + self.get_parameter(parameter_name)
+        return result
     
     def set_parameter(self, parameter_value, parameter_name = ""):
         if parameter_name == "":

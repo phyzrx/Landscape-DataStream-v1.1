@@ -88,6 +88,16 @@ def Initialize(*args):
     ins.initialize()
     return result
 
+def Parameter_In(parameters):
+    global ins
+    ins.parameter_in(parameters)
+    return "Parameter Input"
+
+def Parameter_Out(parameter_names):
+    global ins
+    result = ins.parameter_out(parameter_names)
+    return result      
+
 def Retrieve(*arg):
     global ins
     result = "Retrieved"

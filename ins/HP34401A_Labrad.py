@@ -56,10 +56,15 @@ def Initialize(*args):
     result = "Initialized"
     return result
 
-def Parameter_In():
+def Parameter_In(parameters):
+    global ins
+    ins.parameter_in(parameters)
+    return "Parameter Input"
 
-    return
-
+def Parameter_Out(parameter_names):
+    global ins
+    result = ins.parameter_out(parameter_names)
+    return result       
 
 def Write():
     global ins

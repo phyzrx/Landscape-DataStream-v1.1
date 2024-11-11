@@ -54,13 +54,20 @@ class Keithley2450(LandscapeInstrument):
             pass
         return self
 
-ins = Keithley2450() # Instrument Class
+ins = None # Instrument Class
 
 def Identify(*arg):
+    global ins
     return ins.identify(*arg)
 
 def Call(parameters):
+    if not ins == None:
+        _ins = ins._ins
+    else:
+        _ins = None
     global ins
+    ins = Keithley2450()
+    ins._ins = _ins
     print("Calling")
     result = "Called"
     ins.setup(parameters)
@@ -146,6 +153,7 @@ def Close():
 def Exit():
     global ins
     ins.exit()
+    ins = None
     return "Exited"
 
 def Abort():

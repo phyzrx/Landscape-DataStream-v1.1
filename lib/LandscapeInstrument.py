@@ -22,8 +22,8 @@ def InitializeDecorator(func):
         except Exception as e:
             print("%s @ %s : Initialze with Error" % (fc.Description, str(fc.Instrument_Address)))
             print(e)
-            raise err("%s @ %s : Initialze with Error: %s" % (fc.Description, str(fc.Instrument_Address), str(e)))
             fc = None
+            raise err("%s @ %s : Initialze with Error: %s" % (fc.Description, str(fc.Instrument_Address), str(e)))
         return fc
     return wrapper
 
@@ -36,8 +36,8 @@ def CallDecorator(func):
         except Exception as e:
             print("%s @ %s : Call with Error" % (fc.Description, str(fc.Instrument_Address)))
             print(e)
-            raise err("%s @ %s : Call with Error: %s" % (fc.Description, str(fc.Instrument_Address), str(e)))
             fc = None
+            raise err("%s @ %s : Call with Error: %s" % (fc.Description, str(fc.Instrument_Address), str(e)))
         return fc
     return wrapper
 
@@ -179,14 +179,20 @@ class LandscapeInstrument():
         try:
             self._ins.clear()
             print("%s @ %s : is Initialzied" % (self.Description, str(self.Instrument_Address)))
-        except Exception as e:
-            print("%s @ %s : Initialze with Error" % (self.Description, str(self.Instrument_Address)))
-            print(e)
-            raise err("%s @ %s : Initialze with Error: %s" % (self.Description, str(self.Instrument_Address), str(e)))
+        except:
+            try:
+                self.open_resource()
+                self._ins.clear()
+                print("%s @ %s : is Initialzied" % (self.Description, str(self.Instrument_Address)))
+            except Exception as e:
+                print("%s @ %s : Initialze with Error" % (self.Description, str(self.Instrument_Address)))
+                print(e)
+                raise err("%s @ %s : Initialze with Error: %s" % (self.Description, str(self.Instrument_Address), str(e)))
         return self
     
     def retrieve(self):
         try:
+            self._ins.clear()
             self.Previous_Value = LandscapeUtilities.findnum(self._ins.query(self.Retrieve_Command))[0]
             print("%s @ %s : was at Value = %g"  % (self.Description, str(self.Instrument_Address), self.Previous_Value))
         except Exception as e:

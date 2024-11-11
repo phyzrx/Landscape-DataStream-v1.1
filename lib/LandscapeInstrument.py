@@ -97,6 +97,15 @@ class LandscapeInstrument():
         except:
             pass
         return value
+    
+    def set_parameter(self, parameter_value, parameter_name = ""):
+        if parameter_name == "":
+            self.__setattr__(parameter_name.replace(" ", "_"), parameter_value)
+        elif parameter_name == "":
+            pass
+        else:
+            self._sync_status = parameter_value
+        return self
 
     def identify(self, Description = ""):
         if not Description == "":
@@ -240,15 +249,6 @@ class LandscapeInstrument():
                 print("%s @ %s : at %g Scan with Error" % (self.Description, str(self.Instrument_Address), self.Previous_Value))
                 print(e)
                 raise("%s @ %s : at %g Scan with Error: %s" % (self.Description, str(self.Instrument_Address), self.Previous_Value, str(e)))
-        return self
-
-    def sync_parameter(self, parameter_value, parameter_name = ""):
-        if parameter_name == "":
-            self.__setattr__(parameter_name.replace(" ", "_"), parameter_value)
-        elif parameter_name == "":
-            pass
-        else:
-            self._sync_status = parameter_value
         return self
 
     def write(self):

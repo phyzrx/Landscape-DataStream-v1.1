@@ -56,6 +56,11 @@ def Initialize(*args):
     result = "Initialized"
     return result
 
+def Parameter_In():
+
+    return
+
+
 def Write():
     global ins
     result = "Write Done"
